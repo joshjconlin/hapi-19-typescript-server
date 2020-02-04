@@ -1,0 +1,54 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "tsc",
+        "lint": "",
+        "dev": "NODE_ENV=dev nodemon --max-old-space-size=8192",
+        "prestart": "npm run build",
+        "start": "node ./build/index.js --max-old-space-size=8192",
+        "test": "mocha --recursive",
+        "prettier": "prettier \"**/*.+(js|jsx|json|css|less|)\"",
+        "prettier:format": "npm run prettier -- --write"
+    },
+    "keywords": [
+        "typescript",
+        "hapi"
+    ],
+    "author": "josh conlin",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/hapi": "18.0.3",
+        "@types/node": "13.7.0",
+        "@typescript-eslint/eslint-plugin": "2.18.0",
+        "@typescript-eslint/parser": "2.18.0",
+        "eslint": "6.8.0",
+        "eslint-config-prettier": "6.10.0",
+        "eslint-plugin-prettier": "3.1.2",
+        "husky": "3.0.9",
+        "mocha": "7.0.1",
+        "nodemon": "2.0.2",
+        "prettier": "1.19.1",
+        "ts-node": "8.6.2",
+        "typescript": "3.7.5"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "tsc && pretty-quick --staged",
+            "pre-push": "mocha --recursive"
+        }
+    },
+    "engines": {
+        "node": "13"
+    },
+    "dependencies": {
+        "bcryptjs": "2.4.3",
+        "@hapi/hapi": "18.4.0",
+        "hapi-auth-jwt2": "8.8.1",
+        "joi": "14.3.1",
+        "jsonwebtoken": "8.5.1",
+        "mongoose": "5.8.11"
+    }
+}

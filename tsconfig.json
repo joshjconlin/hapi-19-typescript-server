@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "outDir": "build",
+    "baseUrl": ".",
+    "types": ["node"],
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"]
+    }
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", ".vscode", ".idea", "test", "build"]
+}
