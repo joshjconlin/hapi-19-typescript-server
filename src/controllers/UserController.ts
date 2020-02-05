@@ -1,9 +1,9 @@
 import * as Hapi from '@hapi/hapi';
-import {Login} from 'responses/responses';
-import {User} from 'models/user';
+import { Login } from 'responses/responses';
+import { User } from 'models/user';
 import Token from '../auth/token';
 import UserRepository from '../repositories/UserRepository';
-import {Credentials} from 'auth/auth';
+import { Credentials } from 'auth/auth';
 
 // todo: better error messages
 class UserController {
@@ -25,6 +25,27 @@ class UserController {
             await UserRepository.deleteById(userId);
 
             return h.response(user).takeover();
+        } catch (error) {
+            return h
+                .response({ status: 'error', error: error.message })
+                .code(403)
+                .takeover();
+        }
+    }
+
+    public async update(request, h): Promise<Hapi.ServerResponse> {
+        try {
+            const credentials: Credentials = request.auth.credentials;
+            const update: User = request.payload;
+
+            const userId: string = request.params.userId;
+            const user: User = await UserRepository.getById(userId);
+
+            UserController.validateAccess(credentials, user);
+
+            const updated: User = await UserRepository.update(update, userId);
+
+            return h.response(updated);
         } catch (error) {
             return h
                 .response({ status: 'error', error: error.message })
@@ -73,7 +94,10 @@ class UserController {
 
             return h.response(response);
         } catch (error) {
-            return h.response({ status: 'error', error: error.message }).code(400).takeover();
+            return h
+                .response({ status: 'error', error: error.message })
+                .code(400)
+                .takeover();
         }
     }
 }

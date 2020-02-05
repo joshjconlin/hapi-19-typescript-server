@@ -1,4 +1,4 @@
-import {User} from 'models/user';
+import { User } from 'models/user';
 import bcrypt from 'bcryptjs';
 import UserModel from '../models/users/user';
 
@@ -17,9 +17,21 @@ class UserRepository {
         });
     }
 
+    public async update(update: User, userId: string): Promise<User> {
+        return new Promise((resolve, reject) => {
+            UserModel.update({ _id: userId }, update, (error, writeResult: User) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(writeResult);
+                }
+            });
+        });
+    }
+
     public async doesExist(user: User): Promise<boolean> {
         return new Promise(resolve => {
-            UserModel.find({email: user.email}, (error: Error, users: User[]) => {
+            UserModel.find({ email: user.email }, (error: Error, users: User[]) => {
                 if (error || !users.length) {
                     resolve(false);
                 } else {
@@ -41,7 +53,7 @@ class UserRepository {
 
     public async getById(userId: string): Promise<User> {
         return new Promise((resolve, reject) => {
-            UserModel.find({_id: userId}, (error: Error, users: User[]) => {
+            UserModel.find({ _id: userId }, (error: Error, users: User[]) => {
                 if (error) {
                     reject(error);
                 } else if (!users.length) {
@@ -57,7 +69,7 @@ class UserRepository {
 
     public async deleteById(userId: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            UserModel.deleteOne({_id: userId}, (error) => {
+            UserModel.deleteOne({ _id: userId }, error => {
                 if (error) {
                     reject(error);
                 } else {

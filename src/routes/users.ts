@@ -35,6 +35,27 @@ export default function getRoutes(server: Hapi.Server): void {
     });
 
     server.route({
+        method: 'PUT',
+        path: '/user/{userId}',
+        options: {
+            auth: 'jwt',
+            validate: {
+                params: {
+                    userId: Joi.string().required(),
+                },
+                payload: {
+                    username: Joi.string(),
+                    firstName: Joi.string(),
+                    lastName: Joi.string(),
+                    email: Joi.string(),
+                },
+                failAction,
+            }
+        },
+        handler: UserController.update,
+    });
+
+    server.route({
         method: 'POST',
         path: '/user',
         options: {

@@ -10,7 +10,7 @@
         "prestart": "npm run build",
         "start": "node ./build/index.js --max-old-space-size=8192",
         "test": "mocha --recursive",
-        "prettier": "prettier \"**/*.+(js|jsx|json|css|less|)\"",
+        "prettier": "prettier \"**/*.+(ts|js|jsx|json|css|less|)\"",
         "prettier:format": "npm run prettier -- --write"
     },
     "keywords": [
