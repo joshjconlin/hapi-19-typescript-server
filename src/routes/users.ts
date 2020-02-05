@@ -1,6 +1,7 @@
 import * as Hapi from '@hapi/hapi';
 import Joi from 'joi';
 import UserController from '../controllers/UserController';
+import { failAction } from './util';
 
 export default function getRoutes(server: Hapi.Server): void {
     server.route({
@@ -12,12 +13,25 @@ export default function getRoutes(server: Hapi.Server): void {
                 params: {
                     userId: Joi.string().required(),
                 },
-                failAction: (request, h, error) => { // todo: factor out
-                    return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
-                },
+                failAction,
             },
         },
         handler: UserController.get,
+    });
+
+    server.route({
+        method: 'DELETE',
+        path: '/user/{userId}',
+        options: {
+            auth: 'jwt',
+            validate: {
+                params: {
+                    userId: Joi.string().required(),
+                },
+                failAction,
+            },
+        },
+        handler: UserController.delete,
     });
 
     server.route({
@@ -33,9 +47,7 @@ export default function getRoutes(server: Hapi.Server): void {
                     email: Joi.string().required(),
                     password: Joi.string().required(),
                 },
-                failAction: (request, h, error) => {
-                    return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
-                },
+                failAction,
             },
         },
         handler: UserController.create,

@@ -1,6 +1,7 @@
 import * as Hapi from '@hapi/hapi';
 import Joi from 'joi';
 import AuthController from '../controllers/AuthController';
+import {failAction} from "./util";
 
 export default function getRoutes(server: Hapi.Server): void {
     server.route({
@@ -13,9 +14,7 @@ export default function getRoutes(server: Hapi.Server): void {
                     username: Joi.string().required(),
                     password: Joi.string().required(),
                 },
-                failAction: (request, h, error) => {
-                    return error.isJoi ? h.response(error.details[0]).takeover() : h.response(error).takeover();
-                },
+                failAction,
             },
         },
         handler: AuthController.authenticate,
