@@ -5,7 +5,6 @@ import Token from '../auth/token';
 import UserRepository from '../repositories/UserRepository';
 import { Credentials } from 'auth/auth';
 
-// todo: better error messages
 class UserController {
     private static validateAccess(credentials: Credentials, user: User): never | void {
         if (`${user._id}` !== `${credentials.userId}` && credentials.scope !== 'admin') {

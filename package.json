@@ -31,6 +31,7 @@
         "mocha": "7.0.1",
         "nodemon": "2.0.2",
         "prettier": "1.19.1",
+        "pretty-quick": "2.0.1",
         "ts-node": "8.6.2",
         "typescript": "3.7.5"
     },
@@ -45,10 +46,15 @@
     },
     "dependencies": {
         "bcryptjs": "2.4.3",
+        "hapi-pino": "6.3.0",
         "@hapi/hapi": "18.4.0",
         "hapi-auth-jwt2": "8.8.1",
         "joi": "14.3.1",
         "jsonwebtoken": "8.5.1",
+        "good": "8.1.2",
+        "good-console": "8.0.0",
+        "good-file": "6.0.1",
+        "good-squeeze": "5.1.0",
         "mongoose": "5.8.11"
     }
 }
